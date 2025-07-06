@@ -12,6 +12,8 @@ if(ENABLE_VFS)
 endif()
 
 set(GUI_FILES
+	gui/cloud/encoding.c
+	gui/cloud/download.c
 	gui/cheats.c
 	gui/gui-config.c
 	gui/gui-runner.c

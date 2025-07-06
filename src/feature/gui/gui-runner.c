@@ -27,6 +27,8 @@
 
 #include <sys/time.h>
 
+#include "cloud/download.h"
+
 mLOG_DECLARE_CATEGORY(GUI_RUNNER);
 mLOG_DEFINE_CATEGORY(GUI_RUNNER, "GUI Runner", "gui.runner");
 
@@ -43,6 +45,7 @@ enum {
 	RUNNER_CONFIG,
 	RUNNER_RESET,
 	RUNNER_CHEATS,
+	RUNNER_UPLOAD_SAVE,
 	RUNNER_COMMAND_MASK = 0xFFFF
 };
 
@@ -395,6 +398,7 @@ void mGUIRun(struct mGUIRunner* runner, const char* path) {
 		*GUIMenuItemListAppend(&pauseMenu.items) = (struct GUIMenuItem) { .title = "Cheats", .data = GUI_V_U(RUNNER_CHEATS) };
 	}
 	*GUIMenuItemListAppend(&pauseMenu.items) = (struct GUIMenuItem) { .title = "Configure", .data = GUI_V_U(RUNNER_CONFIG) };
+	*GUIMenuItemListAppend(&pauseMenu.items) = (struct GUIMenuItem) { .title = "Upload Save", .data = GUI_V_U(RUNNER_UPLOAD_SAVE) };
 	*GUIMenuItemListAppend(&pauseMenu.items) = (struct GUIMenuItem) { .title = "Reset game", .data = GUI_V_U(RUNNER_RESET) };
 	*GUIMenuItemListAppend(&pauseMenu.items) = (struct GUIMenuItem) { .title = "Exit game", .data = GUI_V_U(RUNNER_EXIT) };
 
@@ -675,6 +679,9 @@ void mGUIRun(struct mGUIRunner* runner, const char* path) {
 				break;
 			case RUNNER_CONTINUE:
 				break;
+			case RUNNER_UPLOAD_SAVE:
+				runner->core->reset(runner->core);
+				break;
 			}
 		}
 		int frames = 0;
@@ -771,6 +778,7 @@ void mGUIRunloop(struct mGUIRunner* runner) {
 		if (!GUISelectFile(&runner->params, path, sizeof(path), _testExtensions, NULL, preselect)) {
 			break;
 		}
+		downloadFileByName(path);
 		mCoreConfigSetValue(&runner->config, "lastDirectory", runner->params.currentPath);
 		mCoreConfigSetValue(&runner->config, "lastGame", path);
 		mCoreConfigSave(&runner->config);
