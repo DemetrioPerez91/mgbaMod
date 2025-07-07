@@ -28,6 +28,7 @@
 #include <sys/time.h>
 
 #include "cloud/download.h"
+#include "cloud/upload.h"
 
 mLOG_DECLARE_CATEGORY(GUI_RUNNER);
 mLOG_DEFINE_CATEGORY(GUI_RUNNER, "GUI Runner", "gui.runner");
@@ -680,7 +681,7 @@ void mGUIRun(struct mGUIRunner* runner, const char* path) {
 			case RUNNER_CONTINUE:
 				break;
 			case RUNNER_UPLOAD_SAVE:
-				runner->core->reset(runner->core);
+				uploadFileByName(path);
 				break;
 			}
 		}

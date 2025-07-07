@@ -12,6 +12,9 @@ if(ENABLE_VFS)
 endif()
 
 set(GUI_FILES
+	gui/Cloud/logToFile.c
+	gui/Cloud/cleanupFileName.c
+	gui/Cloud/upload.c
 	gui/cloud/encoding.c
 	gui/cloud/download.c
 	gui/cheats.c

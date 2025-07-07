@@ -12,6 +12,7 @@
 #define SCREEN_LINES 1024
 #define LINE_LENGTH 1024
 #define MAX_SAVES 1024
+#define LOGS_ENABLED false
 
 #define MAX_FILES 1024
 
